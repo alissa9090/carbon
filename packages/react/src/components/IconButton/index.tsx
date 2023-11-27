@@ -13,7 +13,106 @@ import { Tooltip } from '../Tooltip';
 import { usePrefix } from '../../internal/usePrefix';
 import cx from 'classnames';
 
-const IconButton = React.forwardRef(function IconButton(props, ref) {
+export const IconButtonAligns = [
+  'top',
+  'top-left',
+  'top-right',
+  'bottom',
+  'bottom-left',
+  'bottom-right',
+  'left',
+  'right',
+] as const;
+
+export type IconButtonAlign = (typeof IconButtonAligns)[number];
+
+export const IconButtonKinds = [
+  'primary',
+  'secondary',
+  'ghost',
+  'tertiary',
+] as const;
+
+export type IconButtonKind = (typeof IconButtonKinds)[number];
+
+export const IconButtonSizes = ['sm', 'md', 'lg'] as const;
+
+export type IconButtonSize = (typeof IconButtonSizes)[number];
+
+interface IconButtonProps {
+  /**
+   * Specify how the trigger should align with the tooltip
+   */
+  align?: IconButtonAlign;
+
+  /**
+   * Provide an icon or asset to be rendered inside of the IconButton
+   */
+  children?: React.ReactNode;
+
+  /**
+   * Specify an optional className to be added to your Button
+   */
+  className?: string;
+
+  /**
+   * Determines whether the tooltip should close when inner content is activated (click, Enter or Space)
+   */
+  closeOnActivation?: boolean;
+
+  /**
+   * Specify whether the tooltip should be open when it first renders
+   */
+  defaultOpen?: boolean;
+
+  /**
+   * Specify whether the Button should be disabled, or not
+   */
+  disabled?: boolean;
+
+  /**
+   * Specify the duration in milliseconds to delay before displaying the tooltip
+   */
+  enterDelayMs?: number;
+
+  /**
+   * Specify whether the IconButton is currently selected
+   */
+
+  isSelected?: boolean;
+  /**
+   * Specify the type of button to be used as the base for the IconButton
+   */
+  kind?: IconButtonKind;
+
+  /**
+   * Provide the label to be rendered inside of the Tooltip. The label will use
+   * `aria-labelledby` and will fully describe the child node that is provided.
+   * This means that if you have text in the child node it will not be
+   * announced to the screen reader.
+   */
+  label: React.ReactNode;
+
+  /**
+   * Specify the duration in milliseconds to delay before hiding the tooltip
+   */
+  leaveDelayMs?: number;
+
+  /**
+   * Specify the size of the Button. Defaults to `md`.
+   */
+  size?: IconButtonSize;
+
+  /**
+   * Specify an optional className to be added to your Tooltip wrapper
+   */
+  wrapperClasses?: string;
+}
+
+const IconButton = React.forwardRef(function IconButton(
+  props: IconButtonProps,
+  ref
+) {
   const {
     align,
     children,
